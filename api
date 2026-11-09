@@ -1,18 +1,20 @@
 export default async function handler(req, res) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST,PUT');
+  // 1. Set explicit CORS headers allowing requests from your frontend domain
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Or replace with 'https://pathshala-rose.vercel.app'
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Content-Type'
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
   );
 
+  // 2. Handle browser preflight OPTIONS request immediately
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
+  // 3. Only accept POST requests for login
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -20,10 +22,17 @@ export default async function handler(req, res) {
   try {
     const { username, password } = req.body;
 
-    // Put your backend logic or OpenAI API calls here!
-    
-    return res.status(200).json({ success: true, message: "Success from Vercel Serverless Function!" });
+    // 4. Temporary validation (replace or connect to your database/OpenAI backend logic)
+    if (username === 'superadmin') {
+      return res.status(200).json({
+        success: true,
+        token: 'mock-jwt-token-xyz',
+        message: 'Login successful'
+      });
+    }
+
+    return res.status(401).json({ error: 'Invalid username or password' });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
