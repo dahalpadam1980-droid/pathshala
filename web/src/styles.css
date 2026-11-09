@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-navy-50: #eef3fa;
+  --color-navy-100: #d9e3f2;
+  --color-navy-200: #b3c7e5;
+  --color-navy-300: #84a3d3;
+  --color-navy-400: #547bbc;
+  --color-navy-500: #35599c;
+  --color-navy-600: #26467d;
+  --color-navy-700: #1e3a5f;
+  --color-navy-800: #182e4c;
+  --color-navy-900: #132339;
+  --color-navy-950: #0c1726;
+  --color-teal-50: #e6faf7;
+  --color-teal-100: #c3f2eb;
+  --color-teal-200: #8ae5d8;
+  --color-teal-300: #4fd2c1;
+  --color-teal-400: #26b8a8;
+  --color-teal-500: #0f9e8f;
+  --color-teal-600: #0b7f74;
+  --color-teal-700: #0a665e;
+  --color-teal-800: #09514c;
+  --color-teal-900: #083f3c;
+}
+
+html {
+  font-family: 'Segoe UI', 'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased dark:bg-navy-950 dark:text-slate-200;
+}
+
+/* Nepali text should use a Devanagari-friendly font */
+.font-ne {
+  font-family: 'Noto Sans Devanagari', 'Mukta', 'Segoe UI', sans-serif;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-slate-300 dark:bg-navy-700;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Print: hide chrome, show content */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .print-area {
+    position: static !important;
+    inset: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+}
